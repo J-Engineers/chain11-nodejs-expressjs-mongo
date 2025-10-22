@@ -5,8 +5,8 @@ const hpp = require('hpp');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const errorHandler = require("./middlewares/error")
-const connect = require("./config/db")
+const errorHandler = require("./middlewares/error");
+const connect = require("./config/db");
 
 const authRoute = require("./routes/auth");
 
@@ -34,7 +34,7 @@ app.use(cors())
 connect()
 
 
-app.use("/auth", authRoute);
+app.use("/api/v1/auth", authRoute);
 
 app.get('/', (req, res) => {
     res.status(200).json({
@@ -44,12 +44,25 @@ app.get('/', (req, res) => {
 
 app.use(errorHandler);
 
+
+
 const PORT = process.env.PORT || 5005
 const HOST = process.env.HOST || '127.0.0.1'
 
-app.listen(5050, HOST, error => {
+app.listen(PORT, HOST, error => {
     if(error){
         console.log('App error: ', error)
     }
-    console.log('Server is running on port 5050')
+    console.log(`Server is running on port ${PORT} and on the host ${HOST}`)
 })
+
+// Handle unhandled promise rejections
+process.on("unhandledRejection", (err, promise) => {
+  console.log(`Error: ${err.message}`);
+  // Close server & exit process
+  // server.close(() => process.exit(1));
+});
+
+process.on("uncaughtException", (err, promise) => {
+  console.log(`Error: ${err.message}`);
+});
