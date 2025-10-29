@@ -9,16 +9,17 @@ const errorHandler = require("./middlewares/error");
 const connect = require("./config/db");
 
 const authRoute = require("./routes/auth");
+const adminRoute = require("./routes/admin");
 
 // CORS, helmet, morgan, rate limiter, mongo sanitize, xss-clean, hpp, compression, cookie parser
 
-const app = express()
+const app = express();
 
 
-app.use(express.json())
+app.use(express.json());
 
-app.use(hpp())
-app.use(helmet())
+app.use(hpp());
+app.use(helmet());
 
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
@@ -35,6 +36,7 @@ connect()
 
 
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/admin", adminRoute);
 
 app.get('/', (req, res) => {
     res.status(200).json({

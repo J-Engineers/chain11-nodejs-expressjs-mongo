@@ -4,6 +4,11 @@ let referralCodeGenerator = require("referral-code-generator");
 const randomize = require('randomatic');
 const crypto = require("crypto");
 const sendEmail = require("../../utils/sendEmail");
+const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+
 
 const register = async (req, res, next) => {
     // business logic
@@ -23,15 +28,20 @@ const register = async (req, res, next) => {
     
     const converted = crypto.createHash('sha256').update(otp).digest('hex');
 
+    var token = jwt.sign({ email: email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1d' });
+
+    const convertedPassword = await bcrypt.hash(password, saltRounds);
+
     const data = {
         firstname,
         lastname,
         email,
-        password,
+        password: convertedPassword,
         phone,
         referralCode: refCode,
         referredBy: referredBy?.lowercase() || null,
-        verificationCode: converted
+        verificationCode: converted,
+        verificationExpire: Date.now() + 1000 * 60 * 15, // must be verified within 15 minutes
     };
 
     const check = await User.findOne({email: email}).select("_id");
@@ -41,12 +51,17 @@ const register = async (req, res, next) => {
 
     const saveData = await User.create(data);
 
+    const response = {
+        saveData,
+        token
+    }
+
     const message = `Welcome to our business.\nPlease verify you email.\nYour One Time Password is: <span>${otp}</span>.`
 
-    await sendEmail({to: email, subject: "Registration Verification", text: '', html: message}, []);
+    await sendEmail({email: email, subject: "Registration Verification", text: '', html: message}, []);
 
     return {
-        "data": saveData,
+        "data": response,
         "metaData": {}
     }
 }

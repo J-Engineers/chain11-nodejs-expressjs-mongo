@@ -12,7 +12,7 @@ const sendEmail = async (options) => {
   });
 
   const message = {
-    from: `Test <developer@appname.io>`,
+    from: `Developer <justice@venireapp.com>`,
     to: options.email,
     subject: options.subject,
     html: options.message,

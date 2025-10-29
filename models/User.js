@@ -27,9 +27,21 @@ const userSchema = mongoose.Schema({
     verificationCode: {
         type: String
     },
+    verificationExpire: {
+        type: Date,
+    },
     isVerified: {
         type: Boolean,
         default: false
+    },
+    role: {
+        type: String,
+        // type: Enumerator('admin', 'user'),
+        default: 'user'
+    },
+    lastLogin: {
+        type: Date,
+        default: Date.now()
     },
     createdAt: {
         type: Date,
