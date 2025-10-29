@@ -7,9 +7,10 @@ const {
 } = require("../controllers/admin");
 
 const { validateDeleteUserObj } = require('../validators/admin');
+const { protect, verified } = require('../middlewares/admin');
 
 
-router.get('/get-user',  getUser);
+router.get('/get-user', protect, verified,  getUser);
 router.delete('/delete-user', validateDeleteUserObj, deleteUser);
 
 module.exports = router;

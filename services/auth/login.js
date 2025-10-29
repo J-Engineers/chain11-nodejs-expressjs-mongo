@@ -23,7 +23,7 @@ const login = async (req, res, next) => {
         // sign new jwt
         const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1d' });
         return {
-            "data": token,
+            "token": token,
             "metaData": {}
         }
     }catch(error){
