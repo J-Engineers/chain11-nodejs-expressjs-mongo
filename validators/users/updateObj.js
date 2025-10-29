@@ -9,7 +9,7 @@ const updateSchema = Joi.object({
     phone: Joi.string().min(11).max(15).required()
 });
 
-const validateUpdateObj = async (req, res, next) => {
+const updateObj = async (req, res, next) => {
     if(!req.body || Object.keys(req.body).length === 0){
         next(new ErrorResponse(`Request body not complete`, 400));
     }
@@ -23,4 +23,4 @@ const validateUpdateObj = async (req, res, next) => {
     }
 }
 
-module.exports = validateUpdateObj
+module.exports = updateObj

@@ -11,6 +11,6 @@ const { protect, verified } = require('../middlewares/admin');
 
 
 router.get('/get-user', protect, verified,  getUser);
-router.delete('/delete-user', validateDeleteUserObj, deleteUser);
+router.delete('/delete-user', protect, verified, validateDeleteUserObj, deleteUser);
 
 module.exports = router;

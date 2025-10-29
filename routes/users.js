@@ -3,7 +3,8 @@ const router = express.Router()
 
 
 const {update} = require("../controllers/users");
-const {update} = require("../validators/users");
+const {updateObj} = require("../validators/users");
+const { protect, verified } = require("../middlewares/admin");
 
 
-router.put("/update-profile", update, update);
+router.put("/update-profile", protect, verified, update, update);

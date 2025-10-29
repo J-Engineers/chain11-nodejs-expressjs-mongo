@@ -39,6 +39,11 @@ const userSchema = mongoose.Schema({
         // type: Enumerator('admin', 'user'),
         default: 'user'
     },
+    roles: [
+        {
+            type: mongoose.Schema.ObjectId
+        }
+    ],
     lastLogin: {
         type: Date,
         default: Date.now()

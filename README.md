@@ -3,14 +3,21 @@
 
 Assignment:
 
+-POST Request to save a Role
+-GET Request to fetch a Role
+-GET Request to fetch Roles
 
-Create a Role model.
+-PUT Request to update a Role
+-DELETE Request to remove a Role
+-POST Request to save a Action
 
-Create Action Model.
+-GET Request to fetch a Action
+-GET Request to fetch Actions
+-PUT Request to update a Action
 
-Note: Each role has many actions.
-
-Write a route for admin to add, view, edit and delete roles and actions.
+-DELETE Request to remove a Action
+-PUT Request to add a  role to a user
+-PUT Request to remove a role from a user
 
 
 Assignment:
