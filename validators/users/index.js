@@ -1,3 +1,3 @@
 module.exports = {
-    update: require("./updateObj")
+    updateObj: require("./updateObj")
 }
